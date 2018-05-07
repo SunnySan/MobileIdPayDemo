@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Mobile ID Pay</title>
+	<link rel="stylesheet" href="./css/jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" href="./css/custom.css">
+
+	<script src="./js/jquery.min.js"></script>
+	<script src="./js/jquery.mobile-1.4.5.min.js"></script>
+</head>
+
+<body>
+
+<!-- Start of first page -->
+<div data-role="page" id="main">
+
+	<div data-role="header">
+		<h1>Mobile ID Pay</h1>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content" style="text-align:center;">
+		<div style="padding:24px 24px 12px 24px;"><img src="images/qrcode.png" /></div>
+		<p style="padding:12px 24px 12px 24px;">Scan the QR code on the goods and make payment.</p>
+		<div style="padding:24px 24px 24px 24px;"><button class="ui-btn ui-btn-inline">Scan QR code</button></div>
+	</div><!-- /content -->
+
+	<div data-role="footer" data-theme="a" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#main" data-icon="main" class="ui-btn-active">QR Code</a></li>
+				<li><a href="#myid" data-icon="myid">My Card</a></li>
+				<li><a href="#transactions" data-icon="transactions">Transactions</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+<!-- Start of second page -->
+<div data-role="page" id="myid">
+
+	<div data-role="header">
+		<h1>Mobile ID Pay</h1>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content">
+		<p>I'm first in the source order so I'm shown as the page.</p>
+		<p>View internal page called <a href="#bar">bar</a></p>
+	</div><!-- /content -->
+
+	<div data-role="footer" data-theme="a" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#main" data-icon="main">QR Code</a></li>
+				<li><a href="#myid" data-icon="myid" class="ui-btn-active">My Card</a></li>
+				<li><a href="#transactions" data-icon="transactions">Transactions</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+<!-- Start of third page -->
+<div data-role="page" id="transactions">
+
+	<div data-role="header">
+		<h1>Mobile ID Pay</h1>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content">
+		<p>I'm first in the source order so I'm shown as the page.</p>
+		<p>View internal page called <a href="#bar">bar</a></p>
+	</div><!-- /content -->
+
+	<div data-role="footer" data-theme="a" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#main" data-icon="main">QR Code</a></li>
+				<li><a href="#myid" data-icon="myid">My Card</a></li>
+				<li><a href="#transactions" data-icon="transactions" class="ui-btn-active">Transactions</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+</body>
+</html>
+
+<script>
+	$(function () {
+		QRScanner.prepare(onDone); // show the prompt
+	});
+ 
+	function onDone(err, status){
+		if (err) {
+			// here we can handle errors and clean up any loose ends.
+			alert(err);
+			console.error(err);
+		}
+		if (status.authorized) {
+			// W00t, you have camera access and the scanner is initialized.
+			// QRscanner.show() should feel very fast.
+		} else if (status.denied) {
+			QRScanner.openSettings();
+			// The video preview will remain black, and scanning is disabled. We can
+			// try to ask the user to change their mind, but we'll have to send them
+			// to their device settings with `QRScanner.openSettings()`.
+		} else {
+			// we didn't get permission, but we didn't get permanently denied. (On
+			// Android, a denial isn't permanent unless the user checks the "Don't
+			// ask again" box.) We can ask again at the next relevant opportunity.
+		}
+	}
+</script>

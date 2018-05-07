@@ -1,0 +1,15 @@
+﻿.ui-icon-main:after{
+	background-image: url('../images/qrcode.png');
+	background-repeat: no-repeat;
+	background-size: 16px 16px;
+}
+.ui-icon-myid:after{
+	background-image: url('../images/creditcard16.png');
+	background-repeat: no-repeat;
+	background-size: 16px 16px;
+}
+.ui-icon-transactions:after{
+	background-image: url('../images/ic_menu_paste_holo_light16.png');
+	background-repeat: no-repeat;
+	background-size: 16px 16px;
+}
