@@ -90,8 +90,12 @@
 
 <script>
 	$(function () {
-		QRScanner.prepare(onDone); // show the prompt
+		document.addEventListener('deviceready', initCamera, false);
 	});
+	
+	function initCamera(){
+		QRScanner.prepare(onDone); // show the prompt
+	}
  
 	function onDone(err, status){
 		if (err) {
@@ -102,6 +106,7 @@
 		if (status.authorized) {
 			// W00t, you have camera access and the scanner is initialized.
 			// QRscanner.show() should feel very fast.
+			alert("ok");
 		} else if (status.denied) {
 			QRScanner.openSettings();
 			// The video preview will remain black, and scanning is disabled. We can
