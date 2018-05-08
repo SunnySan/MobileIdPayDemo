@@ -195,11 +195,13 @@
 			return;
 		}
 		
-		var iccid = getLocalValue("iccid");
+		//var iccid = getLocalValue("iccid");
+		var iccid = localStorage.getItem('iccid');
 		if (beEmpty(iccid)){
 		alert("1");
 			iccid = getCurrentTimestamp();
-			setLocalValue("iccid", iccid);
+			localStorage.setItem('iccid', iccid);
+			//setLocalValue("iccid", iccid);
 		alert("iccid=" + iccid);
 		}
 		alert("iccid2=" + iccid);
