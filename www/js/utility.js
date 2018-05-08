@@ -200,8 +200,14 @@ function getDataFromServer(sProgram, sData, sResponseType, SuccessCallback, bBlo
 		alert(sData);
 		alert(sResponseType);
 	*/
+	var sUrl = "";
+	if (sProgram.indexOf("gslssd")>0){
+		sUrl = sProgram;
+	}else{
+		sUrl = sServerBaseURL + sProgram;
+	}
 	$.ajax({
-		url: sServerBaseURL + sProgram,
+		url: sUrl,
 		type: 'POST', //根據實際情況，可以是'POST'或者'GET'
 		beforeSend : (bBlockUI==true?showBlockUI:null),
 		complete   : (bBlockUI==true?unBlockUI:null),
