@@ -39,10 +39,11 @@
 			navigator.notification.alert(err);
 		} else {
 			// The scan completed, display the contents of the QR code:
-			navigator.notification.alert(text);
-			$.mobile.urlHistory.clearForward();
+			window.plugins.toast.show('Data scaned successfully!', 'short', 'bottom', null, null);
+			//$.mobile.urlHistory.clearForward();
 			var s = "index.html?goodsurl=" + text;
-			location.href = s;
+			//location.href = s;
+			$.mobile.navigate(s);
 		}
 	}
 </script>
