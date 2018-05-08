@@ -189,7 +189,7 @@
 	}
 	
 	function doConfirm(){
-		alert("0");
+		//alert("0");
 		if (beEmpty(goodsId)){
             navigator.notification.alert("Please scan QR Code first.", null, "System Message", "OK");
 			return;
@@ -198,13 +198,13 @@
 		//var iccid = getLocalValue("iccid");
 		var iccid = localStorage.getItem('iccid');
 		if (beEmpty(iccid)){
-		alert("1");
+		//alert("1");
 			iccid = getCurrentTimestamp();
 			localStorage.setItem('iccid', iccid);
 			//setLocalValue("iccid", iccid);
-		alert("iccid=" + iccid);
+		//alert("iccid=" + iccid);
 		}
-		alert("iccid2=" + iccid);
+		alert("iccid=" + iccid);
 
         var url = "http://cms.gslssd.com/MobileIdPayServer/ajaxAddNewTransaction.jsp?";
         url += "iccid=" + iccid;
@@ -216,7 +216,7 @@
 		var sData = "";
 
 		getDataFromServer(url, sData, "json", function(data){
-		alert("3");
+		//alert("3");
 			if (!data.resultCode || !data.resultText){
 	            navigator.notification.alert("Unable to get transaction result!", null, "System Message", "OK");
 				return;
