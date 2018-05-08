@@ -39,7 +39,7 @@
 			navigator.notification.alert(err);
 		} else {
 			// The scan completed, display the contents of the QR code:
-			//navigator.notification.alert(text);
+			navigator.notification.alert(text);
 			$.mobile.urlHistory.clearForward();
 			var s = "index.html?goodsurl=" + text;
 			location.href = s;
