@@ -278,6 +278,7 @@
 						s += "</li>";
 					});	//$.each( data.orders, function(i, r) {
 					$('#ulTransactions').append(s);
+					$('#ulTransactions').lisdtview('refresh');
 				}else if (data.resultCode=="00006"){
 					window.plugins.toast.show('No record found!', 'short', 'bottom', null, null);
 				}else{
