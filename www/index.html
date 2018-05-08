@@ -47,7 +47,7 @@
 	<div role="main" class="ui-content">
 		<div style="text-align:center;padding:12px 24px 12px 24px;"><img id="goodsImage" src="" style="width:128px;height:128px;" /></div>
 		<div>Goods name:&nbsp;<span id="goodsName"></span></div>
-		<div>Price:&nbsp;$<span id="goodsPrice"></span></div>
+		<div>Price:&nbsp;$<span id="goodsPrice" style="color:#FF0000;"></span></div>
 		<div>Description:&nbsp;<br><span id="goodsDescription"></span></div>
 		<div style="padding-top:12px;">PIN Code:&nbsp;<input type="text" id="pinCode" size="12" maxlength="12"></div>
 		<div style="text-align:center;padding:12px 24px 24px 24px;">
@@ -122,6 +122,7 @@
 <script>
 	$(function () {
 		document.addEventListener('deviceready', initCamera, false);
+		setOnClickEvent();
 	});
 	
 	function initCamera(){
@@ -155,6 +156,25 @@
 		}
 	}
 	
+	function setOnClickEvent(){
+		// Starting at http://example.com/
+		
+		// Define a click binding for all anchors in the page
+		$( "a" ).on( "click", function( event ) {
+			
+			// Prevent the usual navigation behavior
+			event.preventDefault();
+			
+			// Alter the url according to the anchor's href attribute, and
+			// store the data-foo attribute information with the url
+			$.mobile.navigate( this.attr( "href" ));
+			
+			// Hypothetical content alteration based on the url. E.g, make
+			// an ajax request for JSON data and render a template into the page.
+			alterContent( this.attr( "href" ) );
+		});
+	}
+
 	var goodsId = "";
 	
 	function gotoPaymentConfirmPage(goodsurl){
@@ -195,6 +215,16 @@
 			return;
 		}
 		
+		var pinCode = $('#pinCode').val();
+
+		var storedPin = localStorage.getItem('myPINCode');
+		if (beEmpty(storedPin)) storedPin = "111111";
+		
+		if (pinCode!=storedPin){
+            navigator.notification.alert("PIN Code is incorrect, default is 111111!", null, "System Message", "OK");
+			return;
+		}
+		
 		//var iccid = getLocalValue("iccid");
 		var iccid = localStorage.getItem('iccid');
 		if (beEmpty(iccid)){
@@ -204,7 +234,7 @@
 			//setLocalValue("iccid", iccid);
 		//alert("iccid=" + iccid);
 		}
-		alert("iccid=" + iccid);
+		//alert("iccid=" + iccid);
 
         var url = "http://cms.gslssd.com/MobileIdPayServer/ajaxAddNewTransaction.jsp?";
         url += "iccid=" + iccid;
@@ -222,7 +252,7 @@
 				return;
 			}else{
 				if (data.resultCode=="00000"){
-					window.plugins.toast.show('The job is successfully processed.', 'short', 'bottom', null, null);
+					window.plugins.toast.show('The job is successfully processed.', 'long', 'bottom', null, null);
 					showPage("#main");
 				}else{
 		            navigator.notification.alert("Process failed: " + data.resultText, null, "System Message", "OK");

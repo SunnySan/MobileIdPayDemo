@@ -21,7 +21,6 @@
     <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1" />
     <plugin name="cordova-plugin-x-toast" source="npm" spec="2.6.2" />
     <plugin name="cordova-plugin-qrscanner" source="npm" spec="2.5.0" />
-    <plugin name="cordova-plugin-nativestorage" source="npm" spec="2.3.1" />
 	<platform name="android">
 		<icon density="ldpi" src="res/icons/android/drawable-ldpi-icon.png" />
 		<icon density="mdpi" src="res/icons/android/drawable-mdpi-icon.png" />
