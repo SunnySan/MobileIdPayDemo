@@ -129,6 +129,7 @@
 		//$.mobile.urlHistory.clearForward();
 		QRScanner.prepare(onDone); // show the prompt
 		var s = getParameterByName("goodsurl");
+		document.addEventListener("backbutton", function(e){navigator.app.exitApp();}, false);
 		if (notEmpty(s) && s.indexOf("ajaxGetMyGoods")>0){
 			gotoPaymentConfirmPage(s);
 		}
