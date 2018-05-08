@@ -31,7 +31,7 @@
 			<ul>
 				<li><a href="#main" data-icon="main" class="ui-btn-active ui-state-persist">QR Code</a></li>
 				<li><a href="#myid" data-icon="myid">My Card</a></li>
-				<li><a href="#transactions" data-icon="transactions">Transactions</a></li>
+				<li><a href="#transactions" data-icon="transactions" onclick="getTransactions();">Transactions</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div><!-- /footer -->
@@ -61,7 +61,7 @@
 			<ul>
 				<li><a href="#main" data-icon="main" class="ui-btn-active ui-state-persist">QR Code</a></li>
 				<li><a href="#myid" data-icon="myid">My Card</a></li>
-				<li><a href="#transactions" data-icon="transactions">Transactions</a></li>
+				<li><a href="#transactions" data-icon="transactions" onclick="getTransactions();">Transactions</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div><!-- /footer -->
@@ -84,7 +84,7 @@
 			<ul>
 				<li><a href="#main" data-icon="main">QR Code</a></li>
 				<li><a href="#myid" data-icon="myid" class="ui-btn-active ui-state-persist">My Card</a></li>
-				<li><a href="#transactions" data-icon="transactions">Transactions</a></li>
+				<li><a href="#transactions" data-icon="transactions" onclick="getTransactions();">Transactions</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div><!-- /footer -->
@@ -98,8 +98,8 @@
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content">
-		<p>I'm first in the source order so I'm shown as the page.</p>
-		<p>View internal page called <a href="#bar">bar</a></p>
+		<ul data-role="listview" data-inset="true" id="ulTransactions">
+		</ul>
 	</div><!-- /content -->
 
 	<div data-role="footer" data-theme="a" data-position="fixed">
@@ -122,7 +122,6 @@
 <script>
 	$(function () {
 		document.addEventListener('deviceready', initCamera, false);
-		setOnClickEvent();
 	});
 	
 	function initCamera(){
@@ -157,25 +156,6 @@
 		}
 	}
 	
-	function setOnClickEvent(){
-		// Starting at http://example.com/
-		
-		// Define a click binding for all anchors in the page
-		$( "a" ).on( "click", function( event ) {
-			
-			// Prevent the usual navigation behavior
-			event.preventDefault();
-			
-			// Alter the url according to the anchor's href attribute, and
-			// store the data-foo attribute information with the url
-			$.mobile.navigate( $(this).attr( "href" ));
-			
-			// Hypothetical content alteration based on the url. E.g, make
-			// an ajax request for JSON data and render a template into the page.
-			alterContent( $(this).attr( "href" ) );
-		});
-	}
-
 	var goodsId = "";
 	
 	function gotoPaymentConfirmPage(goodsurl){
@@ -261,6 +241,52 @@
 			}
 
 		});	//getDataFromServer("xxx.jsp", sData, "json", function(data){
+
+	}
+	
+	function getTransactions(){
+		var iccid = localStorage.getItem('iccid');
+		if (beEmpty(iccid)){
+			window.plugins.toast.show('There is no transactiobs.', 'long', 'bottom', null, null);
+			return;
+		}
+
+		$('#ulTransactions li').remove();
+		
+		var sData = "";
+		var s = "";
+		var tmp = "";
+
+		sData += "iccid=" + iccid;
+
+		getDataFromServer("ajaxGetTransactionHistory.jsp", sData, "json", function(data){
+			if (!data.resultCode || !data.resultText){
+	            navigator.notification.alert("Unable to get transaction history!", null, "System Message", "OK");
+				return;
+			}else{
+				if (data.resultCode=="00000"){
+					s = "";
+					$.each( data.records, function(i, r) {
+						s += "<li>";
+						s += "	<a href='#'>";
+						tmp = "";
+						if (notEmpty(r.Goods_Picture_URL)) tmp = r.Goods_Picture_URL;
+						s += "		<img src='" + tmp + "'>";
+						s += "		<h2>" + r.Goods_Name + "</h2>";
+						s += "		<p>$" + r.Goods_Price + ", " + r.Create_Date + "</p>";
+						s += "	</a>";
+						s += "</li>";
+					});	//$.each( data.orders, function(i, r) {
+					$('#ulTransactions').append(s);
+				}else if (data.resultCode=="00006"){
+					window.plugins.toast.show('No record found!', 'short', 'bottom', null, null);
+				}else{
+		            navigator.notification.alert("Fail to get transaction history: " + data.resultText, null, "System Message", "OK");
+				}
+			}
+
+		});	//getDataFromServer("xxx.jsp", sData, "json", function(data){
+
 
 	}
 </script>
