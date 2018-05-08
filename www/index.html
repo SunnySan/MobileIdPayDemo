@@ -46,6 +46,11 @@
 
 	<div role="main" class="ui-content" style="text-align:center;">
 		<div style="padding:24px 24px 12px 24px;"><img id="goodsImage" src="" style="width:128px;height:128px;" /></div>
+		<div>Goods name:&nbsp;<span id="goodsName"></span></div>
+		<div>Price:&nbsp;<span id="goodsPrice"></span></div>
+		<div>Description:&nbsp;$<span id="goodsDescription"></span></div>
+		<div>PIN Code:&nbsp;<input type="text" id="pinCode" size="12" maxlength="12"></div>
+		<div style="padding:24px 24px 24px 24px;"><button class="ui-btn ui-btn-inline" onclick="doConfirm();">Confirm</button></div>
 	</div><!-- /content -->
 
 	<div data-role="footer" data-theme="a" data-position="fixed">
@@ -162,8 +167,10 @@
 	                var txtPrice = data.price;
 	                var txtDescription = data.description;
 	                var img = data.picture;
-		            navigator.notification.alert(img + ":" + data.resultText, null, "System Message", "OK");
                 	$('#goodsImage').attr("src", img);
+                	$('#goodsName').text(txtName);
+                	$('#goodsPrice').text(txtPrice);
+                	$('#goodsDescription').text(txtDescription);
 				}else if (data.resultCode=="00006"){
 					window.plugins.toast.show('No data found!', 'short', 'bottom', null, null);
 				}else{
