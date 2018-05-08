@@ -49,8 +49,8 @@
 		<div>Goods name:&nbsp;<span id="goodsName"></span></div>
 		<div>Price:&nbsp;<span id="goodsPrice"></span></div>
 		<div>Description:&nbsp;$<span id="goodsDescription"></span></div>
-		<div>PIN Code:&nbsp;<input type="text" id="pinCode" size="12" maxlength="12"></div>
-		<div style="padding:24px 24px 24px 24px;"><button class="ui-btn ui-btn-inline" onclick="doConfirm();">Confirm</button></div>
+		<div style="padding-top:12px;">PIN Code:&nbsp;<input type="text" id="pinCode" size="12" maxlength="12"></div>
+		<div style="text-align:center;padding:12px 24px 24px 24px;"><button class="ui-btn ui-btn-inline" onclick="doConfirm();">Confirm</button></div>
 	</div><!-- /content -->
 
 	<div data-role="footer" data-theme="a" data-position="fixed">
@@ -171,7 +171,7 @@
                 	$('#goodsImage').attr("src", img);
                 	$('#goodsName').text(txtName);
                 	$('#goodsPrice').text(txtPrice);
-                	$('#goodsDescription').text(txtDescription);
+                	$('#goodsDescription').html(txtDescription);
 				}else if (data.resultCode=="00006"){
 					window.plugins.toast.show('No data found!', 'short', 'bottom', null, null);
 				}else{
