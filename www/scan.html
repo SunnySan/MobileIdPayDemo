@@ -15,6 +15,13 @@
 
 <!-- Start of first page -->
 <div data-role="page" id="main" style="background-color: transparent;">
+	<div data-role="footer" data-theme="a" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#" class="ui-btn-active">Cancel</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
 
 </div><!-- /page -->
 
@@ -46,4 +53,11 @@
 			//$.mobile.navigate(s);
 		}
 	}
+</script>
+
+<script>
+$("a").click(function(event) {
+	event.preventDefault();
+	window.history.back();
+});
 </script>
