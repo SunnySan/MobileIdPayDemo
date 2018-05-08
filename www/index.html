@@ -162,6 +162,7 @@
 	                var txtPrice = data.price;
 	                var txtDescription = data.description;
 	                var img = data.picture;
+		            navigator.notification.alert(img + ":" + data.resultText, null, "System Message", "OK");
                 	$('#goodsImage').attr("src", img);
 				}else if (data.resultCode=="00006"){
 					window.plugins.toast.show('No data found!', 'short', 'bottom', null, null);
