@@ -144,6 +144,13 @@ function getCurrentDate(){
 	return txtCurrDate;
 }
 
+/**********取得目前時間至毫秒**********/
+function getCurrentTimestamp(){
+	var currDate = new Date();	//目前時間
+	var txtCurrDate = currDate.getTime();
+	return txtCurrDate;
+}
+
 /**********取得儲存在client端的變數值(從PC cookie或手機storage取得)**********/
 function getLocalValue(key){
 	var value = "";

@@ -50,7 +50,10 @@
 		<div>Price:&nbsp;$<span id="goodsPrice"></span></div>
 		<div>Description:&nbsp;<br><span id="goodsDescription"></span></div>
 		<div style="padding-top:12px;">PIN Code:&nbsp;<input type="text" id="pinCode" size="12" maxlength="12"></div>
-		<div style="text-align:center;padding:12px 24px 24px 24px;"><button class="ui-btn ui-btn-inline" onclick="doConfirm();">Confirm</button></div>
+		<div style="text-align:center;padding:12px 24px 24px 24px;">
+			<button class="ui-btn ui-btn-inline" onclick="doConfirm();">Confirm</button>
+			<a href="#main" class="ui-btn ui-btn-inline">Cancel</a>
+		</div>
 	</div><!-- /content -->
 
 	<div data-role="footer" data-theme="a" data-position="fixed">
@@ -152,6 +155,8 @@
 		}
 	}
 	
+	var goodsId = "";
+	
 	function gotoPaymentConfirmPage(goodsurl){
 		showPage("#payment-confirm");
 		var sData = "";
@@ -162,7 +167,7 @@
 				return;
 			}else{
 				if (data.resultCode=="00000"){
-	                var goodsId = data.id;
+	                goodsId = data.id;
 	                var txtName = data.name;
 	                var txtPrice = data.price;
 	                var txtDescription = data.description;
@@ -183,4 +188,41 @@
 
 	}
 	
+	function doConfirm(){
+		if (beEmpty(goodsId)){
+            navigator.notification.alert("Please scan QR Code first.", null, "System Message", "OK");
+			return;
+		}
+		
+		var iccid = getLocalValue("iccid");
+		if (beEmpty(iccid)){
+			iccid = getCurrentTimestamp();
+			setLocalValue("iccid", iccid);
+		}
+
+        var url = "http://cms.gslssd.com/MobileIdPayServer/ajaxAddNewTransaction.jsp?";
+        url += "iccid=" + iccid;
+        url += "&goodsId=" + goodsId;
+        url += "&transactionId=" + getCurrentTimestamp();
+        url += "&publicKey=";
+        url += "&signature=";
+
+		var sData = "";
+
+		getDataFromServer(url, sData, "json", function(data){
+			if (!data.resultCode || !data.resultText){
+	            navigator.notification.alert("Unable to get transaction result!", null, "System Message", "OK");
+				return;
+			}else{
+				if (data.resultCode=="00000"){
+					window.plugins.toast.show('The job is successfully processed.', 'short', 'bottom', null, null);
+					showPage("#main");
+				}else{
+		            navigator.notification.alert("Process failed: " + data.resultText, null, "System Message", "OK");
+				}
+			}
+
+		});	//getDataFromServer("xxx.jsp", sData, "json", function(data){
+
+	}
 </script>
