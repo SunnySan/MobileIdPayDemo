@@ -148,7 +148,7 @@
 	}
 	
 	function gotoPaymentConfirmPage(goodsurl){
-		showPage("payment-confirm");
+		showPage("#payment-confirm");
 		var sData = "";
 
 		getDataFromServer(goodsurl, sData, "json", function(data){
