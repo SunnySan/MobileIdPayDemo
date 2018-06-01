@@ -161,10 +161,17 @@
 		//參考 https://github.com/phonegap/phonegap-plugin-barcodescanner
    cordova.plugins.barcodeScanner.scan(
       function (result) {
+      	if (notEmpty(result.format) && result.format=="QR_CODE" && notEmpty(result.text) && result.text.indexOf("ajaxGetMyGoods")>0){
+      		gotoPaymentConfirmPage(result.text);
+    	}else{
+            navigator.notification.alert("Unable to get correct QR code, please try again!", null, "System Message", "OK");
+    	}
+    	/*
           alert("We got a barcode\n" +
                 "Result: " + result.text + "\n" +
                 "Format: " + result.format + "\n" +
                 "Cancelled: " + result.cancelled);
+                */
       },
       function (error) {
           alert("Scanning failed: " + error);
