@@ -22,7 +22,11 @@
     <plugin name="cordova-plugin-dialogs" source="npm" spec="~1.2.1" />
     <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1" />
     <plugin name="cordova-plugin-x-toast" source="npm" spec="2.6.2" />
-    <plugin name="cordova-plugin-qrscanner" source="npm" spec="2.6.0" />
+    <!--<plugin name="cordova-plugin-qrscanner" source="npm" spec="2.6.0" />-->
+    <plugin name="phonegap-plugin-barcodescanner" source="npm" />
+    <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+    <string>To scan barcodes</string>
+</edit-config>
 	<platform name="android">
 		<icon density="ldpi" src="res/icons/android/drawable-ldpi-icon.png" />
 		<icon density="mdpi" src="res/icons/android/drawable-mdpi-icon.png" />
